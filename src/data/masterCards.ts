@@ -1,3 +1,5 @@
+import { shuffle } from "lodash/fp";
+
 type Character = {
   id: string;
   title: string;
@@ -58,16 +60,23 @@ const allCards = [
   //   .concat(cardDataBase.weapons);
 ];
 
-const makeADeck = (noOfCards: number) => {
+export const makeADeck = (noOfCards: number) => {
+  // TODO: need to use rarity to determine how many of each card to use
   const deckCards = getAllCardIds();
-  const shuffledDeckCards = shuffle(deckCards);
-  return shuffledDeckCards;
+  const shuffledDeckCards = shuffle([
+    ...deckCards,
+    ...deckCards,
+    ...deckCards,
+    ...deckCards,
+    ...deckCards,
+  ]);
+  return shuffledDeckCards.slice(0, noOfCards);
 };
 
-const allCardsById = allCards.reduce((acc, card) => {
-  acc[card.id] = card;
-  return acc;
-}, {});
+// const allCardsById = allCards.reduce((acc, card) => {
+//   acc[card.id] = card;
+//   return acc;
+// }, {});
 
 export const getAllCards = () => {
   return allCards;
@@ -80,6 +89,13 @@ export const getAllCardIds = (): string[] => {
 export const getCardById = (id: string): Character | undefined => {
   return allCards.find((card) => card.id === id);
 };
-function shuffle(deckCards: string[]) {
-  throw new Error("Function not implemented.");
-}
+export const getCardsById = (ids: string[]): (Character | Spells)[] => {
+  return ids.map((id) => {
+    return allCards.find((card) => card.id === id);
+  });
+};
+// function shuffle(deckCards: string[]) {
+//   throw new Error("Function not implemented.");
+// }
+
+console.log("makeADeck", makeADeck(115));
