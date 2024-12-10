@@ -1,12 +1,12 @@
 import { shuffle } from "lodash/fp";
 
-type Character = {
-  id: string;
+export type Character = {
+  id?: string;
   title: string;
-  description: string;
-  dmg: string;
-  def: string;
-  rarity: string; // * out of 100
+  description?: string;
+  dmg?: string;
+  def?: string;
+  rarity?: string; // * out of 100
 };
 
 type Spells = Character & {
@@ -82,16 +82,19 @@ export const getAllCards = () => {
   return allCards;
 };
 export const getAllCardIds = (): string[] => {
-  return allCards.map((card) => card.id);
+  return allCards.map((card) => card.id) as string[];
 };
 // console.log("getAllCardIds", getAllCardIds());
 
-export const getCardById = (id: string): Character | undefined => {
-  return allCards.find((card) => card.id === id);
+export const getCardById = (id: string) => {
+  if (allCards.find((card) => card.id === id)) {
+    return allCards.find((card) => card.id === id);
+  }
+  return;
 };
 export const getCardsById = (ids: string[]): (Character | Spells)[] => {
   return ids.map((id) => {
-    return allCards.find((card) => card.id === id);
+    return allCards.find((card) => card.id === id) as Character;
   });
 };
 // function shuffle(deckCards: string[]) {

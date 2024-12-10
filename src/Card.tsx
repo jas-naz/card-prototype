@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { generalStrings } from "./data/generalStrings";
 
-const Card = (props: { title: string, key: number, flipped?: boolean, mine?: boolean }) => {
+const Card = (props: { title: string, key: (number | string), flipped?: boolean, mine?: boolean }) => {
   const { title = "I am a Card", key, flipped = false, mine } = props;
   const [cardFlipped, setCardFlipped] = useState(flipped);
 
