@@ -17,6 +17,20 @@ const Card = (props: { title: string, card?: Character, key: (number | string), 
   const flip = () => {
     setCardFlipped(!cardFlipped);
   }
+  const handleClick = (e: React.MouseEvent) => {
+    switch (e.detail as number) {
+      // case 1:
+      //   console.log("click");
+      //   break;
+      case 2:
+        console.log("double click");
+        flip();
+        break;
+      // case 3:
+      //   console.log("triple click");
+      //   break;
+    }
+  };
 
   return (
     (title == '') ? // Placeholder for player's cards
@@ -29,13 +43,15 @@ const Card = (props: { title: string, card?: Character, key: (number | string), 
         <h1>{generalStrings.pickACard}</h1>
       </div>
       : 
-      (cardFlipped) ?
-        <div style={{
+      // mine, draggable, backgroundColor, color, className
+      (cardFlipped) ? // front of card
+        <div draggable={mine ? true : false} onDragStart={(e) => e.dataTransfer.setData('card', JSON.stringify(card))}
+          style={{
           ...cardStyle,
           backgroundColor: mine ? 'white' : '#FFC1E1'
         }}
           key={key}
-          onClick={() => flip()}
+          onClick={handleClick}
           className="card your-card"
         >
           {(card) ? <>
@@ -47,14 +63,15 @@ const Card = (props: { title: string, card?: Character, key: (number | string), 
             <><h2>{title}</h2></>
           }
         </div>
-        :
-        <div style={{
+        : // back of card
+        <div draggable={mine ? true : false} onDragStart={(e) => e.dataTransfer.setData('card', JSON.stringify(card))}
+          style={{
           ...cardStyle,
           backgroundColor: mine ? 'limegreen' : 'indigo',
           color: 'rgba(51 51 51 / 0.5)'
         }}
           key={key}
-          onClick={() => flip()}
+          onClick={handleClick}
           className="card back-card"
         >
           {mine &&
