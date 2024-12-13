@@ -2,6 +2,7 @@ import { shuffle } from "lodash/fp";
 
 export type Character = {
   id?: string;
+  name: string;
   title: string;
   description?: string;
   dmg?: string;
@@ -20,15 +21,78 @@ type Spells = Character & {
 
 export const cardDataBase = {
   characters: <Character[]>[
-    { id: "chr001", title: "Ranger", description: "", dmg: "", def: "" },
-    { id: "chr002", title: "Elf", description: "", dmg: "" },
-    { id: "chr003", title: "Barbarian", description: "", dmg: "", def: "" },
-    { id: "chr004", title: "Zombie", description: "", dmg: "", def: "" },
-    { id: "chr005", title: "Pirate", description: "", dmg: "" },
-    { id: "chr006", title: "Thief", description: "", dmg: "", def: "" },
-    { id: "chr007", title: "Knight", description: "", dmg: "", def: "" },
-    { id: "chr008", title: "Oglin", description: "", dmg: "", def: "" },
-    { id: "chr009", title: "Faerie", description: "", dmg: "", def: "" },
+    {
+      id: "chr001",
+      name: "Name",
+      title: "Ranger",
+      description: "This is a ranger",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr002",
+      name: "Name",
+      title: "Elf",
+      description: "This is an elf",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr003",
+      name: "Name",
+      title: "Barbarian",
+      description: "This is a barbarian",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr004",
+      name: "Name",
+      title: "Zombie",
+      description: "This is a zombie",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr005",
+      name: "Name",
+      title: "Pirate",
+      description: "This is a pirate",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr006",
+      name: "Name",
+      title: "Thief",
+      description: "This is a thief",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr007",
+      name: "Name",
+      title: "Knight",
+      description: "This is a knight",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr008",
+      name: "Name",
+      title: "Oglin",
+      description: "This is an oglin",
+      dmg: "1",
+      def: "2",
+    },
+    {
+      id: "chr009",
+      name: "Name",
+      title: "Faerie",
+      description: "This is a faerie",
+      dmg: "1",
+      def: "2",
+    },
   ],
   spells: <Spells[]>[
     // TODO: add spells
@@ -39,12 +103,12 @@ export const cardDataBase = {
       dmg: "",
       def: "",
     },
-    { id: "spl002", title: "Spell 2", description: "", dmg: "", def: "" },
-    { id: "spl003", title: "Spell 3", description: "", dmg: "", def: "" },
-    { id: "spl004", title: "Spell 4", description: "", dmg: "", def: "" },
-    { id: "spl005", title: "Spell 5", description: "", dmg: "", def: "" },
-    { id: "spl006", title: "Spell 6", description: "", dmg: "", def: "" },
-    { id: "spl007", title: "Spell 7", description: "", dmg: "", def: "" },
+    { id: "spl002", title: "Spell 2", description: "", dmg: "1", def: "2" },
+    { id: "spl003", title: "Spell 3", description: "", dmg: "1", def: "2" },
+    { id: "spl004", title: "Spell 4", description: "", dmg: "1", def: "2" },
+    { id: "spl005", title: "Spell 5", description: "", dmg: "1", def: "2" },
+    { id: "spl006", title: "Spell 6", description: "", dmg: "1", def: "2" },
+    { id: "spl007", title: "Spell 7", description: "", dmg: "1", def: "2" },
   ],
   scrolls: [{ title: "" }],
   potions: [{ title: "" }, { title: "" }, { title: "" }],

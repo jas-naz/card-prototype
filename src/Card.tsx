@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { generalStrings } from "./data/generalStrings";
+import { Character } from "./data/masterCards";
 
-const Card = (props: { title: string, key: (number | string), flipped?: boolean, mine?: boolean }) => {
-  const { title = "I am a Card", key, flipped = false, mine } = props;
+const Card = (props: { title: string, card?: Character, key: (number | string), flipped?: boolean, mine?: boolean }) => {
+  const { title = "I am a Card", card, key = 'none', flipped = false, mine } = props;
   const [cardFlipped, setCardFlipped] = useState(flipped);
 
   const cardStyle = {
@@ -37,7 +38,14 @@ const Card = (props: { title: string, key: (number | string), flipped?: boolean,
           onClick={() => flip()}
           className="card your-card"
         >
-          <h2>{title}</h2>
+          {(card) ? <>
+            <h2>{card.name}</h2>
+            <p>{card.title}</p>
+            <p>{card.dmg}/{card.def}</p>
+            <p>{card.description}</p>
+          </> :
+            <><h2>{title}</h2></>
+          }
         </div>
         :
         <div style={{
@@ -56,4 +64,5 @@ const Card = (props: { title: string, key: (number | string), flipped?: boolean,
         </div>
   )
 }
+
 export default Card

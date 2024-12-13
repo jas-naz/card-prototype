@@ -25,14 +25,15 @@ const cardList = {
     { title: 'Darian Windmere' },
   ],
   playerCards: [
-    { title: '' },
+    { title: '', name: '' },
   ]
 }
 function App() {
+  const blankCard = cardList.playerCards[0];
   const [gameActive, setGameActive] = useState(false);
   const [opponentHandCards] = useState(cardList.opponentHandCards);
   const [playerDeckCards, setPlayerDeckCards] = useState(getCardsById(makeADeck(55)));
-  const [handCards, setHandCards] = useState<Character[]>([{ title: '' }]);
+  const [handCards, setHandCards] = useState<Character[]>([blankCard]);
   const [boardCards] = useState([{ title: '' }]);
   const [characterNames] = useState(
     [
@@ -50,9 +51,16 @@ function App() {
     marginBottom: '10px',
   }
 
+  const startGame = (active: boolean) => {
+    if (!active) {
+      setHandCards([{ title: '', name: '' }]);
+      setPlayerDeckCards(getCardsById(makeADeck(55)))
+    }
+    setGameActive(active);
+  }
   const pickCard = () => {
     const nArr = [...handCards.filter(item => item.title !== '')];
-    const newArray = [...nArr, drawCardFromDeck(), { title: '' }];
+    const newArray = [...nArr, drawCardFromDeck(), blankCard];
 
     return (handCards.length <= numberOfHandCards) &&
       setHandCards(newArray);
@@ -87,8 +95,11 @@ function App() {
 
         {/* BOARD */}
         <div className="board noselect">
-          {!gameActive &&
-            <button onClick={() => setGameActive(!gameActive)}>join game</button>
+          {!gameActive && <>
+            <p>
+              Your game is just a few clicks away!
+            </p>
+            <button onClick={() => startGame(true)}>join game</button></>
           }
           {gameActive && <>
             <div style={cardListStyle}>
@@ -112,7 +123,7 @@ function App() {
                     mine={true} />
               ))}
             </div>
-            <button onClick={() => setGameActive(!gameActive)}>end game</button>
+            <button onClick={() => startGame(false)}>end game</button>
           </>
           }
 
@@ -148,6 +159,7 @@ function App() {
               :
               <Card
                 key={index}
+                card={card}
                 title={card.title}
                 flipped={false}
                 mine={true} />
@@ -176,9 +188,6 @@ function App() {
       </div>
 
       <div>
-        <p>
-          Your game is just a few clicks away!
-        </p>
         <p>app version: {versionNumber}, react version: {version}</p>
       </div >
     </>

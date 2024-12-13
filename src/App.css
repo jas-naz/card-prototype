@@ -38,12 +38,17 @@
   cursor: pointer;
   border-radius: 7px;
   /* border: '1px solid black', */
+  &.pick:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
-.card.pick:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-}
+
 .your-card {
   cursor: hand;
+  flex-direction: column;
+  & p, & h2 {
+    margin: 0;
+  }
 }
 
 .back-card {
