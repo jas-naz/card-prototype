@@ -45,8 +45,7 @@ const Card = (props: { title: string, card?: Character, key: (number | string), 
       : 
       // mine, draggable, backgroundColor, color, className
       (cardFlipped) ? // front of card
-        <div draggable={mine ? true : false} onDragStart={(e) => e.dataTransfer.setData('card', JSON.stringify(card))}
-          style={{
+        <div style={{
           ...cardStyle,
           backgroundColor: mine ? 'white' : '#FFC1E1'
         }}
@@ -64,8 +63,7 @@ const Card = (props: { title: string, card?: Character, key: (number | string), 
           }
         </div>
         : // back of card
-        <div draggable={mine ? true : false} onDragStart={(e) => e.dataTransfer.setData('card', JSON.stringify(card))}
-          style={{
+        <div style={{
           ...cardStyle,
           backgroundColor: mine ? 'limegreen' : 'indigo',
           color: 'rgba(51 51 51 / 0.5)'
