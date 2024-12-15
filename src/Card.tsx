@@ -2,13 +2,21 @@ import { useState } from "react";
 import { generalStrings } from "./data/generalStrings";
 import { Character } from "./data/masterCards";
 
-const Card = (props: { title: string, card?: Character, key: (number | string), flipped?: boolean, mine?: boolean }) => {
-  const { title = "I am a Card", card, key = 'none', flipped = false, mine } = props;
+interface CardProps {
+  id?: (string | number),
+  title: string, card?:
+  Character,
+  key?: (number | string),
+  flipped?: boolean,
+  mine?: boolean
+}
+
+const Card = (props: CardProps) => { // 
+  const { title = "I am a Card", key = 'none', card, flipped = false, mine } = props;
   const [cardFlipped, setCardFlipped] = useState(flipped);
 
   const cardStyle = {
     color: 'black',
-    display: 'flex',
     backgroundColor: 'white',
     height: '250px',
     justifyContent: 'center',
