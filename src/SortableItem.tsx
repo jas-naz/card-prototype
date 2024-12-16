@@ -16,11 +16,16 @@ export function SortableItem(props: { id: (number | string); }) {
     transition,
     cursor: 'move',
   };
-
+  const regex = /^1:/i;
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {<div style={{
-        background: 'oklch(0.55 0.07 203.31)',
+        background: String(props.id).includes("Spell") ?
+          'oklch(0.52 0.07 223.47)' :
+          'oklch(0.55 0.07 203.31)',
+        color: regex.test(String(props.id)) ?
+          'oklch(0.84 0.19 115.95)' :
+          'oklch(1 0 89.88)',
         // width: '123px',
         minHeight: '45px',
         borderRadius: '5px',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -17,16 +17,19 @@ import {
 import { SortableItem } from './SortableItem';
 // ./SortableItem
 
-const DNDApp = (props: { cardNames: string[] }) => {
-  const { cardNames = [1, 2, 3, 4, 5] } = props;
-  const [items, setItems] = useState(cardNames);
-  // const [items, setItems] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]);
+const DNDApp = (props: { cardNames: (string[] | number[] | null) }) => {
+  // const { cardNames = [1, 2, 3, 4, 5] } = props;
+  const [items, setItems] = useState([0]);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
     })
   );
+  useEffect(() => {
+    setItems(props.cardNames);
+    console.log('propToWatch changed:', props.cardNames);
+  }, [props.cardNames]);
 
   return (
     <DndContext

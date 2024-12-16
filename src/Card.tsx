@@ -50,7 +50,7 @@ const Card = (props: CardProps) => { //
         className="card your-card pick" >
         <h1>{generalStrings.pickACard}</h1>
       </div>
-      : 
+      :
       // mine, draggable, backgroundColor, color, className
       (cardFlipped) ? // front of card
         <div style={{
@@ -73,7 +73,7 @@ const Card = (props: CardProps) => { //
         : // back of card
         <div style={{
           ...cardStyle,
-          backgroundColor: mine ? 'limegreen' : 'indigo',
+          backgroundColor: mine ? 'mediumseagreen' : 'darkslateblue',
           color: 'rgba(51 51 51 / 0.5)'
         }}
           key={key}
