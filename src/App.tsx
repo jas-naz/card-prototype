@@ -13,8 +13,9 @@ import Droppable from './Droppable';
 
 import ErrorBoundary from './ErrorBoundry';
 import CharacterNames from './CharacterNames';
+import DNDapp from './DNDapp';
 
-const versionNumber = "0.0.003";
+const versionNumber = "0.0.004";
 const cardList = {
   opponentHandCards: [
     { title: '*****' },
@@ -101,90 +102,61 @@ function App() {
     setPlayerDeckCards(shuffle(playerDeckCards));
   }
 
-  function moveCardToBoard(active: any): void { // boardCards: Character[], card: Character
+  function moveCardToBoard(active: any, over: any): void { // boardCards: Character[], card: Character
     if (active === null) {
       setBoardCards([...boardCards.slice(0, -2), blankCard]);
       // return;
+    }
+    if (over === null) {
+      return;
     }
     const bCard = handCards[Number(active)];
     setBoardCards([bCard, ...boardCards]);
 
     console.log("moveCardToBoard", active);
-    console.log(handCards);
+
     // remove from hand
     const newHandCards = [...handCards];
     newHandCards.splice(Number(active), 1);
 
     setHandCards([...newHandCards]);
-
-    // setParent(over);
-    // const newBoardCards = [...boardCards, card];
-    // setBoardCards(newBoardCards);
   }
-
-  // const row = handCards.slice(0, numberOfHandCards).map((card, index) => {
-  //   return <div
-  //     onDragStart={e => dragStart(e)}
-  //     onDragEnter={e => dragEnter(e)}
-  //     onDragEnd={drop}
-  //     draggable={true}
-  //     data-card={card}
-  //   // (e) => e.dataTransfer.setData('card', JSON.stringify(card))}
-  //   >
-  //     {card && card.title == '' ?
-  //       <div
-  //         onClick={() => pickCard()}>
-  //         <Card
-  //           key={index}
-  //           title={card.title}
-  //           flipped={true} />
-  //       </div>
-  //       :
-  //       <Card
-  //         key={index}
-  //         card={card}
-  //         title={card.title}
-  //         flipped={false}
-  //         mine={true} />
-  //     }
-  //   </div>
-  // });
 
   return (
     <DndContext measuring={measuringConfig}
       onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
 
-    <ErrorBoundary>
-    <>
-      <h1>{generalStrings.gameName} v.{versionNumber}</h1>
+      <ErrorBoundary>
+        <>
+          <h1>{generalStrings.gameName} v.{versionNumber}</h1>
 
-      <div className="">
-        {/* <button onClick={() => setCount((count) => count + 1)}>
+          <div className="">
+            {/* <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button> */}
 
-        {/* OPPONENT HAND */}
-        <div style={cardListStyle}>
-          {gameActive && opponentHandCards.slice(0, numberOfHandCards).map((card, index) => (
-            <Card key={index} title={card.title} />
-          ))}
-        </div>
-
-        {/* BOARD */}
-        <div className="board noselect">
-          {!gameActive && <>
-            <p>
-              Your game is just a few clicks away!
-            </p>
-            <button onClick={() => startGame(true)}>join game</button></>
-          }
-          {gameActive && <>
+            {/* OPPONENT HAND */}
             <div style={cardListStyle}>
-              {cardList.opponentCards.slice(0, numberOfCards).map((card, index) => (
+              {gameActive && opponentHandCards.slice(0, numberOfHandCards).map((card, index) => (
                 <Card key={index} title={card.title} />
               ))}
             </div>
-            <div style={cardListStyle}>
+
+            {/* BOARD */}
+            <div className="board noselect">
+              {!gameActive && <>
+                <p>
+                  Your game is just a few clicks away!
+                </p>
+                <button onClick={() => startGame(true)}>join game</button></>
+              }
+              {gameActive && <>
+                <div style={cardListStyle}>
+                  {cardList.opponentCards.slice(0, numberOfCards).map((card, index) => (
+                    <Card key={index} title={card.title} />
+                  ))}
+                </div>
+                <div style={cardListStyle}>
                   {containers.map((id) => (
                     // We updated the Droppable component so it would accept an `id`
                     // prop and pass it to `useDroppable`
@@ -196,63 +168,63 @@ function App() {
                         mine={true} /> : 'Drop here'}
                     </Droppable>
                   ))}
-              {(boardCards) && boardCards.slice(0, numberOfCards).map((card, index) => (
-                <div
-                // draggable={true}
-                // onDragStart={(e) => e.dataTransfer.setData('card', JSON.stringify(card))}
-                >
-                  <Droppable id="droppable">
-                    {parent === "droppable" ? <Draggable id={`draggable`}>Dropped</Draggable> : 'Drop here'}
-                  {card.title == '' ?
-                    <Card
-                      key={index}
-                      title={''}
-                      flipped={false}
-                      mine={true} />
-                    :
-                      <Draggable key={index} id={`dropable${index}`}>
-                        <Card
-                          key={index}
-                          title={card.title}
-                          // card={card}
-                          flipped={false}
-                          mine={true} />
-                      </Draggable>
-                      // <Card
-                      //   key={index}
-                      //   title={card.title}
-                      //   flipped={false}
-                      //   mine={true} />
-                    }
-                  </Droppable>
+                  {(boardCards) && boardCards.slice(0, numberOfCards).map((card, index) => (
+                    <div
+                    // draggable={true}
+                    // onDragStart={(e) => e.dataTransfer.setData('card', JSON.stringify(card))}
+                    >
+                      <Droppable id="droppable">
+                        {parent === "droppable" ? <Draggable id={`draggable`}>Dropped</Draggable> : 'Drop here'}
+                        {card.title == '' ?
+                          <Card
+                            key={index}
+                            title={''}
+                            flipped={false}
+                            mine={true} />
+                          :
+                          <Draggable key={index} id={`dropable${index}`}>
+                            <Card
+                              key={index}
+                              title={card.title}
+                              // card={card}
+                              flipped={false}
+                              mine={true} />
+                          </Draggable>
+                          // <Card
+                          //   key={index}
+                          //   title={card.title}
+                          //   flipped={false}
+                          //   mine={true} />
+                        }
+                      </Droppable>
+                    </div>
+                  ))}
                 </div>
-              ))}
+                <button onClick={() => startGame(false)}>end game</button>
+              </>
+              }
+
             </div>
-            <button onClick={() => startGame(false)}>end game</button>
-          </>
-          }
 
-        </div>
-
-        <div>Deck:
-          {gameActive &&
-              <div style={{
-                ...(((handCards.length) < numberOfHandCards + 1) ? { cursor: 'pointer' } : null),
-                border: '1px solid black', borderRadius: '6px',
-                background: 'seagreen', fontSize: '1em', padding: '3px 6px', width: '140px'
-              }}
-                onClick={() => pickCard()}>Next Card:
-              <p style={{ fontSize: '1em', opacity: 0.35 }}>{playerDeckCards[0].title}</p>
+            <div>Deck:
+              {gameActive &&
+                <div style={{
+                  ...(((handCards.length) < numberOfHandCards + 1) ? { cursor: 'pointer' } : null),
+                  border: '1px solid black', borderRadius: '6px',
+                  background: 'seagreen', fontSize: '1em', padding: '3px 6px', width: '140px'
+                }}
+                  onClick={() => pickCard()}>Next Card:
+                  <p style={{ fontSize: '1em', opacity: 0.35 }}>{playerDeckCards[0].title}</p>
+                </div>
+                // <Card
+                // key={1}
+                // title={playerDeckCards[0].title}
+                // flipped={false}
+                //   mine={true} />
+              }
             </div>
-            // <Card
-            // key={1}
-            // title={playerDeckCards[0].title}
-            // flipped={false}
-            //   mine={true} />
-          }
-        </div>
 
-        {/* HAND */}
+            {/* HAND */}
             {gameActive && <div className="noselect" style={cardListStyle}>
               {/* {React.Children.toArray(row)} */}
               {handCards.slice(0, numberOfHandCards).map((card, index) => (
@@ -295,31 +267,29 @@ function App() {
               ) : null}
             </DragOverlay>
 
-        Deck:: {playerDeckCards.length} <button onClick={() => shuffleMyDeck()}>Shuffle my Deck</button>
-        <div style={{
-          columnCount: 5,
-          columnGap: '10px',
-          margin: '32px 0',
-          textAlign: 'left'
-        }}>
-          {playerDeckCards.map((card, index) => (
+            Deck:: {playerDeckCards.length} <button onClick={() => shuffleMyDeck()}>Shuffle my Deck</button>
             <div style={{
-              border: '1px solid black', borderRadius: '3px',
-              background: (index == 0) ? 'seagreen' : 'darkslategray', fontSize: '1em', padding: '3px 6px'
+              columnCount: 5,
+              columnGap: '10px',
+              margin: '32px 0',
+              textAlign: 'left'
             }}>
-              <p key={index} style={{ fontSize: '1em', opacity: 0.35 }}>{card && card.title}</p>
+              <DNDapp cardNames={playerDeckCards.map((card, i) => `${i + 1}: ${card.title}`)} />
+              {/* {playerDeckCards.map((card, index) => (
+              <div style={{ border: '1px solid black', borderRadius: '3px',
+                background: (index == 0) ? 'seagreen' : 'darkslategray', fontSize: '1em', padding: '3px 6px'
+              }}><p key={index} style={{ fontSize: '1em', opacity: 0.35 }}>{card && card.title}</p>
+              </div>))} */}
             </div>
-          ))}
-        </div>
 
-        <hr />
+            <hr />
 
-        <CharacterNames names={characterNames} />
-      </div>
+            <CharacterNames names={characterNames} />
+          </div>
 
-      <div>
-        <p>app version: {versionNumber}, react version: {version}</p>
-      </div >
+          <div>
+            <p>app version: {versionNumber}, react version: {version}</p>
+          </div >
         </>
       </ErrorBoundary>
     </DndContext>
@@ -333,7 +303,7 @@ function App() {
     // setParent(over ? over.id : null); // 
     setActiveId(null);
     console.log('handleDragEnd', over, active);
-    moveCardToBoard(active ? active.id : null);
+    moveCardToBoard(active ? active.id : null, over ? over.id : null);
   }
 }
 
