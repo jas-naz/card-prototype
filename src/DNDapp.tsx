@@ -19,7 +19,7 @@ import { SortableItem } from './SortableItem';
 
 const DNDApp = (props: { cardNames: (string[] | number[] | null) }) => {
   // const { cardNames = [1, 2, 3, 4, 5] } = props;
-  const [items, setItems] = useState([0]);
+  const [items, setItems] = useState<string[] | number[] | null>([0]);
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

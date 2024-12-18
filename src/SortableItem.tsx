@@ -27,7 +27,7 @@ export function SortableItem(props: { id: (number | string); }) {
           'oklch(0.84 0.19 115.95)' :
           'oklch(1 0 89.88)',
         // width: '123px',
-        minHeight: '45px',
+        minHeight: '58px',
         borderRadius: '5px',
         marginBottom: '5px',
         padding: '5px',
